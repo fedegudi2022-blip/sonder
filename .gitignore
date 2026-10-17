@@ -1,0 +1,20 @@
+# Node
+node_modules/
+dist/
+dist-ssr/
+
+# Vite
+*.local
+
+# Env (tus claves van aquí, nunca se suben a GitHub)
+.env
+.env.local
+
+# Tauri (binarios y claves: se generan en tu PC, nunca se suben)
+src-tauri/target/
+*.key
+*.sig
+
+# Sistema
+.DS_Store
+Thumbs.db

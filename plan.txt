@@ -1,0 +1,46 @@
+Actuá como un desarrollador senior y mentor paciente. Quiero crear una aplicación web de streaming de música tipo Spotify, 100% gratuita y legal. Guiame paso a paso como si fuera principiante absoluto.
+
+### Contexto
+- Nivel de programación: [ninguno / básico / intermedio]
+- Sistema operativo: [Windows / Mac / Linux]
+- Proyecto personal, no comercial (por ahora).
+- Quiero entender cada paso, no solo copiar código.
+
+### Restricciones obligatorias
+- Todo debe ser gratuito: herramientas, hosting, base de datos y música.
+- La música debe provenir exclusivamente de fuentes legales y libres de derechos (Audius y/o Jamendo). Explicame cómo obtener las API keys si es necesario y avisame de cualquier límite del plan gratuito o restricción de licencia.
+- Stack obligatorio:
+  - Frontend: React + Vite
+  - Backend/Auth/DB: Supabase (plan gratuito)
+  - Deploy: Vercel o Netlify (plan gratuito)
+- No uses librerías de pago ni servicios que requieran tarjeta de crédito.
+
+### Funciones del MVP (solo estas)
+1. Registro e inicio de sesión con email (Supabase Auth).
+2. Buscador de canciones, artistas y álbumes (usando la API de Audius o Jamendo).
+3. Reproductor funcional: play/pausa, siguiente, anterior, control de volumen y barra de progreso.
+4. Crear playlists y marcar canciones como favoritas (por usuario, guardadas en Supabase).
+5. Diseño oscuro, moderno y completamente responsive (móvil primero).
+
+### Cómo quiero que respondas
+1. Primero dame un plan general dividido en etapas cortas y claras:
+   - Etapa 1: Instalación y estructura del proyecto
+   - Etapa 2: Diseño base y layout
+   - Etapa 3: Autenticación (registro + login)
+   - Etapa 4: Búsqueda de música
+   - Etapa 5: Reproductor
+   - Etapa 6: Playlists y favoritos
+   - Etapa 7: Deploy
+
+2. Después trabajá **una sola etapa a la vez**.
+   - Explicá en lenguaje simple qué vamos a hacer y por qué.
+   - Dame el código completo y listo para copiar (sin omitir partes).
+   - Indicá claramente en qué archivo va cada fragmento.
+   - Decime exactamente cómo probarlo.
+   - Al terminar la etapa, preguntame si funcionó antes de pasar a la siguiente.
+
+3. Si aparece un error, ayudame a solucionarlo usando el mensaje de error exacto que te pase.
+4. Evitá jerga innecesaria. Si usás un término técnico, explicarlo en una línea.
+5. Avisame proactivamente si alguna herramienta tiene límites del plan gratuito o restricciones de licencia que puedan afectar el proyecto.
+
+Empezá ahora con el plan general y la Etapa 1.

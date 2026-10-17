@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sonder — Streaming gratuito y legal</title>
+  <meta name="description" content="Sonder: música gratuita y legal en tu PC. Ficha de todos los artistas, versiones completas, letras sincronizadas y actualizaciones automáticas." />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="nav">
+    <a class="logo" href="#top"><span class="logo-icon">♪</span> Sonder</a>
+    <nav class="nav-links">
+      <a href="#features">Funciones</a>
+      <a href="#updates">Actualizaciones</a>
+      <a href="#faq">Preguntas</a>
+    </nav>
+    <a class="btn btn-primary btn-sm dl-link" href="#download">Descargar</a>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="kicker">Gratis · Legal · Para Windows</p>
+        <h1>Toda la música,<br />sin pagar Spotify.</h1>
+        <p class="sub">Sonder es una app de escritorio con streaming gratuito y legal: ficha de <strong>todos los artistas</strong>, versiones completas, letras sincronizadas y karaoke. Y se actualiza sola.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary dl-link" href="#download">⬇ Descargar para Windows</a>
+          <span class="ver-badge">v<span id="ver">0.1.0</span></span>
+        </div>
+        <p class="fine">Instalador .exe · <span id="ver2">v0.1.0</span> · Las nuevas versiones se instalan solas desde la app</p>
+      </div>
+      <div class="hero-mock" aria-hidden="true">
+        <div class="mock-window">
+          <div class="mock-bar"><i></i><i></i><i></i></div>
+          <div class="mock-row"><span class="mock-cover"></span><div class="mock-lines"><b></b><s></s></div><em>▶</em></div>
+          <div class="mock-row"><span class="mock-cover c2"></span><div class="mock-lines"><b></b><s></s></div><em>♡</em></div>
+          <div class="mock-row"><span class="mock-cover c3"></span><div class="mock-lines"><b></b><s></s></div><em>▶</em></div>
+          <div class="mock-player"><span class="mock-progress"></span><div class="mock-controls"><i></i><b></b><i></i></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="section">
+      <h2>Hecha para escuchar de verdad</h2>
+      <div class="grid">
+        <div class="card"><span class="ico">🌍</span><h3>Todos los artistas</h3><p>Ficha universal de cualquier autor —Duki, Quevedo, Gardel— con foto, bio y discografía completa, aunque no suba su música a plataformas libres.</p></div>
+        <div class="card"><span class="ico">▶</span><h3>Versiones completas</h3><p>Cada tema resuelve su versión completa disponible automáticamente. Lo que no existe en completo, suena en preview oficial de 30 segundos.</p></div>
+        <div class="card"><span class="ico">🎤</span><h3>Letras y karaoke</h3><p>Letras sincronizadas con la canción y modo karaoke a pantalla completa para cantar encima.</p></div>
+        <div class="card"><span class="ico">🎧</span><h3>Cola pro y radio</h3><p>Cola arrastrable, modo radio automático, crossfade hasta 12s y temporizador de apagado para dormir con música.</p></div>
+        <div class="card"><span class="ico">❤</span><h3>Tus listas, en tu PC</h3><p>Me gustas, playlists e historial guardados en tu equipo. Con login, se sincronizan en la nube.</p></div>
+        <div class="card"><span class="ico">⚖️</span><h3>100% legal</h3><p>Audio servido por plataformas con licencia abierta (Audius) y metadatos de MusicBrainz, iTunes y Wikipedia. Sin piratería.</p></div>
+      </div>
+    </section>
+
+    <section id="updates" class="section alt">
+      <h2>Se actualiza sola</h2>
+      <p class="center">Cada vez que agrego funciones —más fuentes, mejor sonido, nuevas vistas— tu app las recibe sin reinstalar nada.</p>
+      <div class="steps">
+        <div class="step"><b>1</b><p>Te aviso dentro de la app cuando hay versión nueva.</p></div>
+        <div class="step"><b>2</b><p>Tocas «Buscar actualizaciones» en tu Perfil.</p></div>
+        <div class="step"><b>3</b><p>Se descarga, se instala y se reinicia. Listo.</p></div>
+      </div>
+    </section>
+
+    <section id="download" class="section dl">
+      <h2>Descarga Sonder</h2>
+      <p class="center">Windows 10/11 · 64 bits · Instalador .exe</p>
+      <a class="btn btn-primary btn-lg dl-link" href="#download">⬇ Descargar Sonder <span class="ver-badge">v<span class="ver">0.1.0</span></span></a>
+      <p class="fine">Al descargar aceptas usar fuentes legales de audio. Código y catálogo abiertos a inspección.</p>
+    </section>
+
+    <section id="faq" class="section">
+      <h2>Preguntas frecuentes</h2>
+      <details><summary>¿Es gratis de verdad?</summary><p>Sí. No hay suscripción ni cuenta obligatoria. Las cuentas opcionales solo sirven para sincronizar tus listas.</p></details>
+      <details><summary>¿De dónde sale la música?</summary><p>De Audius (streaming con licencia abierta) para el audio completo, más metadatos de MusicBrainz, iTunes y Wikipedia. Todo visible y legal.</p></details>
+      <details><summary>¿Por qué algunos temas suenan 30 segundos?</summary><p>Porque ese artista no publicó su máster en plataformas libres. Te mostramos su ficha y discografía igual, con preview oficial, y la versión completa cuando existe.</p></details>
+      <details><summary>¿Hay versión para Mac o celular?</summary><p>Hoy solo Windows. La app está hecha con Tauri, así que Mac y Linux pueden llegar después sin reescribir nada.</p></details>
+    </section>
+  </main>
+
+  <footer>
+    <span><span class="logo-icon">♪</span> Sonder</span>
+    <span class="fine">© <span id="year">2026</span> Sonder · Música gratuita y legal</span>
+  </footer>
+
+  <script src="./app.js"></script>
+</body>
+</html>
