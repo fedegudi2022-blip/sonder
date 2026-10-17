@@ -41,7 +41,7 @@
     "updater": {
       "active": true,
       "dialog": false,
-      "pubkey": "PON_AQUI_TU_PUBKEY_TAURI",
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEVCQTBFMERCQzRBMTY0QzEKUldUQlpLSEUyK0NnNndNOHY4dEgvcmx2amNpajBYM05JVUVnR3h0R3YvZmx2K0xWbVIzY0EvNHYK",
       "endpoints": [
         "https://github.com/fedegudi2022-blip/sonder/releases/latest/download/latest.json"
       ]
