@@ -38,6 +38,11 @@
     ]
   },
   "plugins": {
+    "deep-link": {
+      "desktop": {
+        "schemes": ["sonder"]
+      }
+    },
     "updater": {
       "active": true,
       "dialog": false,

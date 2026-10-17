@@ -54,6 +54,21 @@ La carpeta `landing/` es un sitio estático sin build (HTML + CSS + JS puro).
 5. Cada vez que cambies la landing o `CONFIG.version`, haz push al repo: Vercel
    redespliega solo en segundos.
 
+## 4b. Login con Discord/Google en el .exe (hacer una vez)
+
+El .exe no puede recibir el retorno OAuth en localhost: abre el navegador del
+sistema y vuelve por deep link `sonder://auth/callback` (ya programado).
+Solo falta allowlistearlo:
+
+1. **Supabase Dashboard → Authentication → URL Configuration → Redirect URLs**:
+   agrega exacta `sonder://auth/callback` (además de las que ya tengas para la web).
+2. **Discord Developer Portal → tu app → OAuth2**: el nombre que ven los usuarios
+   es el de tu app de Discord (hoy dice "Trigger"): cámbialo a **Sonder**.
+   En *Redirects* debe seguir apuntando al callback de Supabase
+   (`https://<tu-ref>.supabase.co/auth/v1/callback`), ese no se toca.
+3. Recompila (`npm run tauri:build`) e instala: al tocar Discord se abre el
+   navegador, autorizas, y la sesión entra sola en la app.
+
 ## 4. Probar el updater antes de publicar
 
 1. Compila e instala la `0.1.0` local (`npm run tauri:build` → instala el `.exe`).

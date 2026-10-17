@@ -42,9 +42,35 @@ export function AuthProvider({ children }) {
     setUser(null)
   }, [])
 
+  // OAuth: en la web redirige normal; en el .exe abre el navegador del
+  // sistema y la sesión vuelve por sonder:// (localhost muere en desktop).
+  // La sesión llega por onAuthStateChange; los errores del callback por evento.
+  useEffect(() => {
+    if (!supabaseConfigured) return
+    let alive = true
+    import('../lib/desktopAuth.js').then((m) => {
+      if (alive) m.installOAuthDeepLinkHandler().catch(() => {})
+    }).catch(() => {})
+    const onErr = (ev) => { if (alive && ev.detail) setError(ev.detail) }
+    window.addEventListener('sonder:oauth-error', onErr)
+    return () => { alive = false; window.removeEventListener('sonder:oauth-error', onErr) }
+  }, [])
+
   const signInWithProvider = useCallback(async (provider) => {
     setError(null)
     if (!supabaseConfigured) { setError(t('auth.noSupabase')); return false }
+    // Rama desktop (con plugins Tauri): no navega el WebView.
+    try {
+      const { isDesktopApp, signInWithProviderDesktop } = await import('../lib/desktopAuth.js')
+      if (await isDesktopApp()) {
+        await signInWithProviderDesktop(provider)
+        setError(t('auth.desktopBrowser')) // aviso, no error: completa en el navegador
+        return true
+      }
+    } catch (e) {
+      if (e?.message && e.message !== 'desktop-missing') { setError(e.message); return false }
+    }
+    // Rama web: redirect clásico a window.location.origin.
     const { error } = await supabase.auth.signInWithOAuth({
       provider,
       options: { redirectTo: window.location.origin },
