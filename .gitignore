@@ -10,6 +10,9 @@ dist-ssr/
 .env
 .env.local
 
+# Visual Studio (caché local del IDE, nunca se sube)
+.vs/
+
 # Tauri (binarios y claves: se generan en tu PC, nunca se suben)
 src-tauri/target/
 *.key
