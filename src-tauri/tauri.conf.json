@@ -43,7 +43,7 @@
       "dialog": false,
       "pubkey": "PON_AQUI_TU_PUBKEY_TAURI",
       "endpoints": [
-        "https://github.com/TU_USUARIO/sonder/releases/latest/download/latest.json"
+        "https://github.com/fedegudi2022-blip/sonder/releases/latest/download/latest.json"
       ]
     }
   }

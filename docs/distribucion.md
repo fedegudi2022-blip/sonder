@@ -14,10 +14,8 @@
    ```
    Te pide contraseña: **guárdala** (la necesitarás en cada release). Te imprime una `pubkey`.
 4. **Pega la pubkey** en `src-tauri/tauri.conf.json` donde dice `PON_AQUI_TU_PUBKEY_TAURI`.
-5. **Crea el repo en GitHub** (p. ej. `TU_USUARIO/sonder`) y sube el proyecto. Luego reemplaza
-   `TU_USUARIO/sonder` por tu repo real en:
-   - `src-tauri/tauri.conf.json` → `plugins.updater.endpoints`
-   - `landing/app.js` → `CONFIG.repo`
+5. **Repo en GitHub**: `fedegudi2022-blip/sonder` (ya creado y conectado en
+   `src-tauri/tauri.conf.json` → `plugins.updater.endpoints` y `landing/app.js` → `CONFIG.repo`).
 6. ⚠️ El identificador quedó fijo en `com.sonder.app`. **No lo cambies nunca**: es lo que
    permite que el .exe reconozca sus propias actualizaciones.
 

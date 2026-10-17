@@ -1,6 +1,6 @@
 // ═══ CONFIGURACIÓN: edita estas 2 líneas en cada release ═══
 const CONFIG = {
-  repo: 'TU_USUARIO/sonder', // ← tu repo de GitHub (para el botón Descargar)
+  repo: 'fedegudi2022-blip/sonder', // ← tu repo de GitHub (para el botón Descargar)
   version: '0.1.0',          // ← misma versión que package.json y tauri.conf.json
 }
 // ════════════════════════════════════════════════════════════
