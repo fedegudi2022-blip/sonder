@@ -5,6 +5,7 @@ import PlayerBar from './components/PlayerBar.jsx'
 import AuthModal from './components/AuthModal.jsx'
 import WelcomeModal, { shouldWelcome } from './components/WelcomeModal.jsx'
 import ArtistView from './components/ArtistView.jsx'
+import PlaylistView from './components/PlaylistView.jsx'
 import Home from './pages/Home.jsx'
 import Profile from './pages/Profile.jsx'
 import Discover from './pages/Discover.jsx'
@@ -32,6 +33,7 @@ function App() {
             </div>
             <PlayerBar />
             <ArtistView />
+            <PlaylistView />
             {showAuth && <AuthModal onClose={() => setShowAuth(false)} />}
             {welcome && <WelcomeModal onDone={() => setWelcome(false)} />}
           </div>

@@ -46,6 +46,7 @@ function TrackRow({ track, index, lista, addedAt = null }) {
         <span className="track-meta"><strong>{track.title}{track.explicit ? <span className="explicit-badge">E</span> : null}</strong><small><button className="artist-link" onClick={goArtist} title={track.artist}>{track.artist}</button>{track.album ? ` • ${track.album}` : ''}</small></span>
       </button>
       {track.preview && <span className="preview-badge" title={t('pb.preview')}>30s</span>}
+      {track.source === 'jamendo' && <span className="source-badge" title={track.permalink || 'Jamendo'}>Jamendo</span>}
       {addedAt && <span className="track-added muted">{addedAt}</span>}
       <span className="track-dur muted">{formatTime(track.duration)}</span>
       <div className="track-actions">

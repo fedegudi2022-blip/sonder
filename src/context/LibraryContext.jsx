@@ -57,6 +57,16 @@ export function LibraryProvider({ children }) {
 
   const isFollowing = useCallback((id) => followed.some((a) => a.id === id), [followed])
 
+  // Página de playlist: qué playlist se muestra a pantalla completa (estilo Spotify)
+  const [playlistView, setPlaylistView] = useState(null) // playlistId | null
+  const openPlaylist = useCallback((id) => { if (id) setPlaylistView(id) }, [])
+  const closePlaylist = useCallback(() => setPlaylistView(null), [])
+  const renamePlaylist = useCallback((id, name) => {
+    const n = (name || '').trim().slice(0, 60)
+    if (!n) return
+    setPlaylists((prev) => prev.map((p) => (p.id === id ? { ...p, name: n } : p)))
+  }, [])
+
   // Vista de autor: qué ficha de artista se muestra a pantalla completa
   const [artistView, setArtistView] = useState(null) // {id, name?} | null
   const openArtist = useCallback((artist) => {
@@ -142,7 +152,7 @@ export function LibraryProvider({ children }) {
   }, [])
 
   return (
-    <LibraryContext.Provider value={{ likes, likedAt, playlists, toggleLike, isLiked, createPlaylist, deletePlaylist, addToPlaylist, removeFromPlaylist, getTrackCache, followed, followArtist, isFollowing, artistView, openArtist, closeArtist }}>
+    <LibraryContext.Provider value={{ likes, likedAt, playlists, toggleLike, isLiked, createPlaylist, deletePlaylist, addToPlaylist, removeFromPlaylist, renamePlaylist, getTrackCache, followed, followArtist, isFollowing, artistView, openArtist, closeArtist, playlistView, openPlaylist, closePlaylist }}>
       {children}
     </LibraryContext.Provider>
   )

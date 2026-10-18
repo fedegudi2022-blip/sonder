@@ -4,7 +4,7 @@ import { usePlayer } from '../context/PlayerContext.jsx'
 import { useT } from '../lib/i18n.js'
 
 function Sidebar({ vista, setVista }) {
-  const { likes, playlists } = useLibrary()
+  const { likes, playlists, openPlaylist } = useLibrary()
   const { current, isPlaying } = usePlayer()
   const { t } = useT()
 
@@ -54,7 +54,7 @@ function Sidebar({ vista, setVista }) {
         {playlists.length === 0
           ? <p className="side-empty">{t('nav.firstPlaylist')}</p>
           : playlists.slice(0, 4).map((p) => (
-            <button key={p.id} className="side-item" onClick={() => go('biblioteca')}>
+            <button key={p.id} className="side-item" onClick={() => openPlaylist(p.id)} title={p.name}>
               <Disc3 size={16} />
               <span className="side-item-name">{p.name}</span>
               <span className="side-count">{p.trackIds.length}</span>

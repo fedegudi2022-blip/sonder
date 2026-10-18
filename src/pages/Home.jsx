@@ -6,6 +6,7 @@ import { enhancePlaylist, getRelatedGroups } from '../lib/discover.js'
 import SongCard from '../components/SongCard.jsx'
 import TrackRow from '../components/TrackRow.jsx'
 import { getTrending, searchTracks, searchArtists, searchAlbums, getPlaylistTracks, getArtistTopTracks, getArgentinaTracks, getLatinoTracks, getTrendingAlbums, getTrendingArtists, getTrackById, getFreshTracks, detectAR, detectLatino, timeAgo, norm, formatTime, GENRES } from '../lib/audius.js'
+import { searchJamendoTracks, hasJamendo } from '../lib/jamendo.js'
 import { getOfficialTop, findOfficialArtist, scoreArtistMatch, matchFullVersions, resolveOfficialSong } from '../lib/itunes.js'
 import { searchUniverse } from '../lib/musicbrainz.js'
 import UniverseView from '../components/UniverseView.jsx'
@@ -34,13 +35,16 @@ function Home({ vista, busqueda, setBusqueda }) {
   const [recLabel, setRecLabel] = useState('')
   const { setQueue, playTrack } = usePlayer()
   const { t } = useT()
-  const { likes, likedAt, playlists, createPlaylist, deletePlaylist, addToPlaylist, removeFromPlaylist, getTrackCache, openArtist } = useLibrary()
+  const { likes, likedAt, playlists, createPlaylist, deletePlaylist, addToPlaylist, removeFromPlaylist, getTrackCache, openArtist, openPlaylist } = useLibrary()
   const [fresh, setFresh] = useState([])
   const [artistShelf, setArtistShelf] = useState(null) // {name, tracks} del autor dominante
   const [related, setRelated] = useState([]) // grupos según tus Me gustas
 
   const [newName, setNewName] = useState('')
   const [historyTick, setHistoryTick] = useState(0)
+  const [lim, setLim] = useState(20) // "Mostrar más": 20 → 50 → 80 (tope 100)
+  const [jamOn] = useState(() => hasJamendo()) // key de Jamendo presente
+  useEffect(() => { setLim(20) }, [busqueda, genero, tab])
   const [fGenre, setFGenre] = useState(null) // Filtro: género (independiente del orden)
   const [fSort, setFSort] = useState('recientes') // recientes | actividad | plays | az
   const [enhancing, setEnhancing] = useState({}) // playlistId -> estado
@@ -74,7 +78,21 @@ function Home({ vista, busqueda, setBusqueda }) {
           const text = adv.text || adv.artist || adv.genre || 'music'
           tracks = applyAdvanced(await searchTracks(text, 30), { ...adv, genre: adv.genre || g })
         } else {
-          tracks = q?.trim() ? await searchTracks(q, 20, g) : await getTrending(20, g)
+          tracks = q?.trim() ? await searchTracks(q, lim, g) : await getTrending(lim, g)
+          // Jamendo en paralelo (si hay key): suma su catálogo sin duplicar
+          // los que ya trajo Audius (mismo título + artista).
+          if (q?.trim() && jamOn) {
+            try {
+              const jam = await searchJamendoTracks(q, Math.min(lim, 50))
+              if (jam.length) {
+                const seen = new Set(tracks.map((x) => `${norm(x.title)}|${norm(x.artist)}`))
+                for (const j of jam) {
+                  const k = `${norm(j.title)}|${norm(j.artist)}`
+                  if (!seen.has(k)) { seen.add(k); tracks.push(j) }
+                }
+              }
+            } catch {}
+          }
         }
         // Con nombre de artista (2+ palabras): lo que más coincide con el nombre va primero
         if (q?.trim() && !hasAdvanced(q)) {
@@ -90,7 +108,7 @@ function Home({ vista, busqueda, setBusqueda }) {
       setError(t('home.loadError'))
     }
     setCargando(false)
-  }, [setQueue, tab])
+  }, [setQueue, tab, lim, jamOn])
 
   // Sección argentina + recomendaciones + novedades (la carga inicial la hace el debounce de abajo)
   useEffect(() => {
@@ -105,11 +123,11 @@ function Home({ vista, busqueda, setBusqueda }) {
     }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Búsqueda con debounce + género + pestaña
+  // Búsqueda con debounce + género + pestaña + límite
   useEffect(() => {
     const t = setTimeout(() => cargar(busqueda, genero, tab), 500)
     return () => clearTimeout(t)
-  }, [busqueda, genero, tab, cargar])
+  }, [busqueda, genero, tab, lim, cargar])
 
   // Foco en el autor: 1) artista exacto en Audius, 2) artista oficial (iTunes,
   // previews de 30s) para los conocidos que no están en Audius, 3) autor dominante.
@@ -348,6 +366,7 @@ function Home({ vista, busqueda, setBusqueda }) {
                 <div className="playlist-head">
                   <strong>{p.name}</strong>
                   <span className="muted">{t('home.themesCount', { n: tracks.length })}</span>
+                  <button className="icon-btn" onClick={() => openPlaylist(p.id)} aria-label={t('pl.open')}><Play size={16} /> {t('pl.open')}</button>
                   <button className="icon-btn danger" onClick={() => deletePlaylist(p.id)} aria-label={t('lib.delete')}><Trash2 size={16} /></button>
                   {tracks.length > 0 && <button className="icon-btn" onClick={() => playTrack(tracks[0], tracks)} aria-label={t('lib.play')}><Shuffle size={16} /> {t('lib.touch')}</button>}
                   <button className="icon-btn" onClick={() => runEnhance(p)} disabled={!!enhancing[p.id]} title={t('lib.enhance')}><Wand2 size={16} /> {enhancing[p.id] || t('lib.enhance')}</button>
@@ -384,6 +403,7 @@ function Home({ vista, busqueda, setBusqueda }) {
 
       {vista === 'buscar' && !busqueda.trim() && (<>
         <p className="hint-box"><Search size={14} /> {t('home.trick')} <code>artista:duki</code> <code>año:2018-2024</code> <code>género:trap</code> — {t('home.trickCombine')}.</p>
+        {!jamOn && <p className="hint-box"><Disc3 size={14} /> {t('home.jamHint')}</p>}
         <div className="explore-grid">
           {GENRES.map((g, i) => (
             <button key={g} className={`explore-tile t${i % 5} ${genero === g ? 'active' : ''}`} onClick={() => setGenero(genero === g ? null : g)}>
@@ -537,6 +557,11 @@ function Home({ vista, busqueda, setBusqueda }) {
       <div className="track-list main-list">
         {gridTracks.map((c, i) => <TrackRow key={c.id} track={c} index={i} lista={gridTracks} />)}
       </div>
+      {busqueda.trim() && !cargando && canciones.length >= lim && lim < 100 && (
+        <button className="more-btn" onClick={() => setLim((l) => Math.min(l + 30, 100))}>
+          <Plus size={15} /> {t('home.showMore')}
+        </button>
+      )}
       </>)}
 
       {fresh.length > 0 && vista === 'inicio' && tab === 'canciones' && !busqueda.trim() && (

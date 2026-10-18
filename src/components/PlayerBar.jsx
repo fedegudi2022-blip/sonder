@@ -6,6 +6,7 @@ import { useLibrary } from '../context/LibraryContext.jsx'
 import { formatTime, getTrackDetail } from '../lib/audius.js'
 import { getLyrics, activeLine } from '../lib/lyrics.js'
 import Karaoke from './Karaoke.jsx'
+import NowPlaying from './NowPlaying.jsx'
 import { store, applySettings } from '../lib/store.js'
 import { useT, getLang } from '../lib/i18n.js'
 
@@ -43,6 +44,7 @@ function PlayerBar() {
   const { toggleLike, isLiked, createPlaylist, addToPlaylist } = useLibrary()
   const { t } = useT()
   const [showQueue, setShowQueue] = useState(false)
+  const [showNow, setShowNow] = useState(false) // vista Sonando ahora a pantalla completa
   const [showVol, setShowVol] = useState(false)
   const VolIcon = volume === 0 ? VolumeX : volume < 0.5 ? Volume1 : Volume2
   const toggleMute = () => setVolume(volume === 0 ? 0.7 : 0)
@@ -86,10 +88,13 @@ function PlayerBar() {
             ? <img key={current.id} src={current.artwork} alt="" draggable={false} onError={() => setCoverOk(false)} />
             : <Music2 size={20} />}
         </div>
-        <div className="song-info">
+        <button className="song-info as-btn" onClick={() => current && setShowNow(true)} title={current ? t('np.open') : ''} disabled={!current}>
           <strong>{current ? current.title : t('pb.choose')}</strong>
           <p>{current ? `${current.artist} • ${current.genre}` : t('pb.tapAny')}{current?.preview ? ` • ${t('pb.preview')}` : ''}</p>
-        </div>
+        </button>
+        <button className="like" onClick={() => current && setShowNow(true)} aria-label={t('np.open')} title={t('np.open')} disabled={!current}>
+          <Maximize2 size={18} />
+        </button>
         <button className={`like ${liked ? 'active' : ''}`} onClick={() => current && toggleLike(current)} aria-label={t('pb.like')}>
           <Heart size={18} fill={liked ? 'currentColor' : 'none'} />
         </button>
@@ -257,6 +262,7 @@ function PlayerBar() {
         <Karaoke track={current} lyrics={lyrics} onClose={() => setShowKaraoke(false)} />,
         document.body
       )}
+      {showNow && <NowPlaying onClose={() => setShowNow(false)} />}
     </footer>
   )
 }
